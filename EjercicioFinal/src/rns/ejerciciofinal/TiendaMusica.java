@@ -54,13 +54,15 @@ public class TiendaMusica {
 			comando = entradaPantalla.nextLine();
 
 			// calculamos el numero de tokens en que está dividido el
-			// comando
-			// introducido, el separador es el espacio
+			// comando introducido, el separador es el espacio
 			numeroTokens = Utilidades.obtenerNumeroDeTokens(comando);
 
 			accion = Utilidades.capturarComando(comando, 1);
 			entidad = Utilidades.capturarComando(comando, 2);
 			codigo = Utilidades.capturarComando(comando, 3);
+			System.out.println("Accion: " + accion);
+			System.out.println("Entidad: " + entidad);
+			System.out.println("Codigo: " + codigo);
 
 			sb = new StringBuffer("");
 			sb.append(accion);
@@ -69,64 +71,78 @@ public class TiendaMusica {
 			comandoCapturado = sb.toString().trim();
 
 			/*
-			 * if (Utilidades.compruebaString(accion,
-			 * Constantes.LISTA_ACCIONES)) { if
-			 * (Utilidades.compruebaString(entidad, Constantes.LISTA_ENTIDADES))
-			 * { if (numeroTokens == 2) { comandoValido = true; if
-			 * (comando.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
-			 * Cliente.crearCliente(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-			 * Cliente.eliminarCliente(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
-			 * Cliente.listarClientes(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
-			 * Musica.crearMusica(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-			 * Musica.eliminarMusica(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
-			 * Musica.listarMusica(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
-			 * Venta.crearVenta(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-			 * Venta.eliminarVenta(); } else if
-			 * (comando.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
-			 * Venta.listarVentas(); } } }
-			 * 
-			 * }
+			  if (Utilidades.compruebaString(accion,
+			  Constantes.LISTA_ACCIONES)) { if
+			  (Utilidades.compruebaString(entidad, Constantes.LISTA_ENTIDADES))
+			  { if (numeroTokens == 2) { comandoValido = true; if
+			  (comando.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
+			  Cliente.crearCliente(); } else if
+			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
+			  Cliente.eliminarCliente(); } else if
+			  (comando.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
+			  Cliente.listarClientes(); } else if
+			  (comando.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
+			  Musica.crearMusica(); } else if
+			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
+			  Musica.eliminarMusica(); } else if
+			  (comando.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
+			  Musica.listarMusica(); } else if
+			  (comando.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
+			  Venta.crearVenta(); } else if
+			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
+			  Venta.eliminarVenta(); } else if
+			  (comando.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
+			  Venta.listarVentas(); } } }
+			  
+			  }
 			 */
 			if (numeroTokens <= 2) {
-				if (Utilidades.compruebaString(comandoCapturado, Constantes.LISTA_COMANDOS)) {
+				if (Utilidades.compruebaString(comandoCapturado,
+						Constantes.LISTA_COMANDOS)) {
 					comandoValido = true;
-					if (comandoCapturado.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
+					if (comandoCapturado
+							.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
 						Cliente.crearCliente();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-						Cliente.eliminarCliente();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
+						System.out.println("Cliente.eliminarCliente();");
+						// Cliente.eliminarCliente();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
 						Cliente.listarClientes();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
 						Musica.crearMusica();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-						Musica.eliminarMusica();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
+						System.out.println("Musica.eliminarMusica();");
+						// Musica.eliminarMusica();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
 						Musica.listarMusica();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
 						Venta.crearVenta();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-						Venta.eliminarVenta();
-					} else if (comandoCapturado.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
+						System.out.println("Venta.eliminarVenta();");
+						// Venta.eliminarVenta();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
 						Venta.listarVentas();
 					}
 				}
-
 				/*
-				else {
-					System.out.println("ERROR - Comando no reconocido");
-					System.out.println("El listado de comandos permitidos es el siguiente:" + "\n");
-					for (String comandoListado : listaComandos) {
-						System.out.println(comandoListado);
-					}
-				}*/
-				
+								else {
+									System.out.println("ERROR - Comando no reconocido");
+									System.out
+											.println("El listado de comandos permitidos es el siguiente:"
+													+ "\n");
+									for (String comandoListado : listaComandos) {
+										System.out.println(comandoListado);
+									}
+								}*/
+
 			}
 
 		} while (!comandoValido);

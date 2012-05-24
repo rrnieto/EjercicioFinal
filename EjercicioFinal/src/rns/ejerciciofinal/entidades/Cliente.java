@@ -8,15 +8,14 @@ import rns.ejeciciofinal.constantes.Constantes;
 import rns.ejerciciofinal.TiendaMusica;
 import rns.ejerciciofinal.utilidades.Utilidades;
 
-public class Cliente extends Lista {
-	private String nombre = "";
-	private String apellido = "";
+public class Cliente extends Persona {
+
 	private String dni = "";
 	private boolean activo = true;
+	private int codigo;
 
 	public Cliente(String nombre, String apellido, String dni, int codigo) {
-		this.nombre = nombre;
-		this.apellido = apellido;
+		super(nombre, apellido);
 		this.dni = dni;
 		this.codigo = codigo;
 		this.activo = true;
@@ -28,8 +27,9 @@ public class Cliente extends Lista {
 		for (int i = 1; i <= TiendaMusica.listaClientes.size(); i++) {
 			cliente = TiendaMusica.listaClientes.get(i);
 			if (cliente.isActivo()) {
-				System.out.println("Cliente: " + cliente.getCodigo() + "; Nombre: " + cliente.getNombre()
-						+ "; Apellido: " + cliente.getApellido() + "; DNI: " + cliente.getDni());
+				System.out.println("Cliente: " + cliente.getCodigo()
+						+ "; Nombre: " + cliente.getNombre() + "; Apellido: "
+						+ cliente.getApellido() + "; DNI: " + cliente.getDni());
 			}
 		}
 		TiendaMusica.introducirComando();
@@ -43,22 +43,28 @@ public class Cliente extends Lista {
 		boolean salir = false;
 
 		try {
-			System.out.print("Introduzca el codigo de cliente que desea eliminar: ");
+			System.out
+					.print("Introduzca el codigo de cliente que desea eliminar: ");
 			entradaPantalla = new Scanner(System.in);
 			codigoCliente = entradaPantalla.nextInt();
 
 			if (TiendaMusica.listaClientes.containsKey(codigoCliente)) {
-				clienteEliminado = TiendaMusica.listaClientes.get(codigoCliente);
+				clienteEliminado = TiendaMusica.listaClientes
+						.get(codigoCliente);
 				if (clienteEliminado.activo) {
 					do {
-						System.out.println("Está seguro de que desea eliminar el siguiente cliente:");
-						System.out.println("Codigo cliente: " + clienteEliminado.getCodigo() + "; Nombre: "
+						System.out
+								.println("Está seguro de que desea eliminar el siguiente cliente:");
+						System.out.println("Codigo cliente: "
+								+ clienteEliminado.getCodigo() + "; Nombre: "
 								+ clienteEliminado.getNombre());
 						entradaPantalla = new Scanner(System.in);
 						eliminar = entradaPantalla.nextLine();
-						if (Utilidades.compruebaString(eliminar, Constantes.LISTA_SINO)) {
+						if (Utilidades.compruebaString(eliminar,
+								Constantes.LISTA_SINO)) {
 							if (eliminar.equalsIgnoreCase(Constantes.SI)) {
-								TiendaMusica.listaClientes.get(codigoCliente).setActivo(false);
+								TiendaMusica.listaClientes.get(codigoCliente)
+										.setActivo(false);
 								System.out.println("Cliente eliminado");
 							} else {
 								System.out.println("Cliente NO eliminado");
@@ -73,7 +79,8 @@ public class Cliente extends Lista {
 				System.out.println("Este cliente no existe");
 			}
 		} catch (InputMismatchException ime) {
-			System.out.println("Dato introducido no válido, debe introducir un código de cliente");
+			System.out
+					.println("Dato introducido no válido, debe introducir un código de cliente");
 		}
 		TiendaMusica.introducirComando();
 	}
@@ -88,14 +95,18 @@ public class Cliente extends Lista {
 			clienteEliminado = TiendaMusica.listaClientes.get(codigoCliente);
 			if (clienteEliminado.activo) {
 				do {
-					System.out.println("Está seguro de que desea eliminar el siguiente cliente:");
-					System.out.println("Codigo cliente: " + clienteEliminado.getCodigo() + "; Nombre: "
+					System.out
+							.println("Está seguro de que desea eliminar el siguiente cliente:");
+					System.out.println("Codigo cliente: "
+							+ clienteEliminado.getCodigo() + "; Nombre: "
 							+ clienteEliminado.getNombre());
 					entradaPantalla = new Scanner(System.in);
 					eliminar = entradaPantalla.nextLine();
-					if (Utilidades.compruebaString(eliminar, Constantes.LISTA_SINO)) {
+					if (Utilidades.compruebaString(eliminar,
+							Constantes.LISTA_SINO)) {
 						if (eliminar.equalsIgnoreCase(Constantes.SI)) {
-							TiendaMusica.listaClientes.get(codigoCliente).setActivo(false);
+							TiendaMusica.listaClientes.get(codigoCliente)
+									.setActivo(false);
 							System.out.println("Cliente eliminado");
 						} else {
 							System.out.println("Cliente NO eliminado");
@@ -129,14 +140,16 @@ public class Cliente extends Lista {
 		entradaPantalla = new Scanner(System.in);
 		dni = entradaPantalla.nextLine();
 
-		codigoCliente = Cliente.obtenerCodigoCliente(TiendaMusica.listaClientes);
+		codigoCliente = Cliente
+				.obtenerCodigoCliente(TiendaMusica.listaClientes);
 
 		Cliente cliente = new Cliente(nombre, apellido, dni, codigoCliente);
 
 		TiendaMusica.listaClientes.put(codigoCliente, cliente);
-		System.out.println("Cliente creado con éxito con código: " + codigoCliente);
-		System.out.println("Nombre: " + nombre + "; Apellido: " + apellido + "; DNI: " + dni + "; Código cliente: "
+		System.out.println("Cliente creado con éxito con código: "
 				+ codigoCliente);
+		System.out.println("Nombre: " + nombre + "; Apellido: " + apellido
+				+ "; DNI: " + dni + "; Código cliente: " + codigoCliente);
 
 		TiendaMusica.introducirComando();
 
@@ -157,11 +170,13 @@ public class Cliente extends Lista {
 			codigoCliente = obtenerCodigoCliente(TiendaMusica.listaClientes);
 			cliente = new Cliente(nombre, apellido, dni, codigoCliente);
 			TiendaMusica.listaClientes.put(codigoCliente, cliente);
-			System.out.println("Cliente con codigo: " + codigoCliente + " creado.");
+			System.out.println("Cliente con codigo: " + codigoCliente
+					+ " creado.");
 		}
 	}
 
-	public static int obtenerCodigoCliente(HashMap<Integer, Cliente> listaClientes) {
+	public static int obtenerCodigoCliente(
+			HashMap<Integer, Cliente> listaClientes) {
 		int codigoClienteValido = 0;
 		int codigoLeido = 0;
 
@@ -188,22 +203,6 @@ public class Cliente extends Lista {
 		this.activo = activo;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
 	public String getDni() {
 		return dni;
 	}
@@ -212,4 +211,11 @@ public class Cliente extends Lista {
 		this.dni = dni;
 	}
 
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 }
