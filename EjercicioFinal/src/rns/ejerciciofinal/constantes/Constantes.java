@@ -1,4 +1,4 @@
-package rns.ejeciciofinal.constantes;
+package rns.ejerciciofinal.constantes;
 
 public final class Constantes {
 

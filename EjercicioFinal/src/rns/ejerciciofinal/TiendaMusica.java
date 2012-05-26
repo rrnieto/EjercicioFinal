@@ -3,7 +3,7 @@ package rns.ejerciciofinal;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import rns.ejeciciofinal.constantes.Constantes;
+import rns.ejerciciofinal.constantes.Constantes;
 import rns.ejerciciofinal.entidades.Cliente;
 import rns.ejerciciofinal.entidades.Musica;
 import rns.ejerciciofinal.entidades.Vendedor;
