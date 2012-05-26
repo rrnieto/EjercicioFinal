@@ -1,6 +1,7 @@
 package rns.ejerciciofinal.entidades;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import rns.ejeciciofinal.constantes.Constantes;
@@ -62,7 +63,7 @@ public class Musica {
 		String formato;
 		int codigo = 0;
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 
 			titulo = ("Titulo" + (i + 1));
 			autor = ("Autor" + (i + 1));
@@ -85,16 +86,17 @@ public class Musica {
 
 		System.out.print("Introduce el título del disco: ");
 		leerPantalla = new Scanner(System.in);
-		titulo = leerPantalla.nextLine();
+		titulo = leerPantalla.nextLine().toUpperCase();
 		System.out.print("Introduce el autor del disco:");
 		leerPantalla = new Scanner(System.in);
-		autor = leerPantalla.nextLine();
+		autor = leerPantalla.nextLine().toUpperCase();
 		do {
 			System.out.print("Introduce el formato del disco:");
 			leerPantalla = new Scanner(System.in);
-			formato = leerPantalla.nextLine();
+			formato = leerPantalla.nextLine().toUpperCase();
 
-		} while (!Utilidades.compruebaString(formato, Constantes.LISTA_FORMATOS));
+		} while (!Utilidades
+				.compruebaString(formato, Constantes.LISTA_FORMATOS));
 
 		codigo = obtenerCodigoMusica(TiendaMusica.listaMusica);
 
@@ -109,26 +111,63 @@ public class Musica {
 		TiendaMusica.introducirComando();
 	}
 
+	//Metodo para eliminar un disco
 	public static void eliminarMusica() {
 		System.out.println("# ELIMINAR MUSICA #");
 		Scanner entradaPantalla = null;
 		int codigo = 0;
 		Musica discoEliminado = null;
+		String eliminar = "";
+		boolean salir = false;
+		try {
 
-		System.out.print("Introduzca el codigo del disco que desea eliminar: ");
-		entradaPantalla = new Scanner(System.in);
-		codigo = entradaPantalla.nextInt();
+			System.out
+					.print("Introduzca el codigo del disco que desea eliminar: ");
+			entradaPantalla = new Scanner(System.in);
+			codigo = entradaPantalla.nextInt();
 
-		if (TiendaMusica.listaClientes.containsKey(codigo)) {
-			discoEliminado = TiendaMusica.listaMusica.get(codigo);
-			System.out.println("Está seguro de que desea eliminar el siguiente disco:");
-			System.out.println("Codigo: " + discoEliminado.getCodigo() + "; Título: " + discoEliminado.getTitulo());
-			TiendaMusica.listaMusica.get(codigo).setActivo(false);
-			System.out.println("Disco eliminado");
+			if (TiendaMusica.listaMusica.containsKey(codigo)) {
+				discoEliminado = TiendaMusica.listaMusica.get(codigo);
+				if (discoEliminado.activo) {
+					do {
+						System.out
+								.println("Está seguro de que desea eliminar el siguiente disco:");
+						System.out.println("Codigo: "
+								+ discoEliminado.getCodigo() + "; Título: "
+								+ discoEliminado.getTitulo());
+
+						entradaPantalla = new Scanner(System.in);
+						eliminar = entradaPantalla.nextLine();
+
+						if (Utilidades.compruebaString(eliminar,
+								Constantes.LISTA_SINO)) {
+							if (eliminar.equalsIgnoreCase(Constantes.SI)) {
+								TiendaMusica.listaMusica.get(codigo).setActivo(
+										false);
+								System.out.println("Disco eliminado");
+							} else {
+								System.out.println("Disco NO eliminado");
+							}
+							salir = true;
+						}
+					} while (!salir);
+				} else {
+					System.out.println("Este disco no existe");
+				}
+			} else {
+				System.out.println("Este disco no existe");
+			}
+
+		} catch (InputMismatchException ime) {
+			System.out
+					.println("Dato introducido no válido, debe introducir un código de disco");
 		}
+
+		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 	}
 
+	/*
 	public static void listarMusica() {
 		System.out.println("# LISTAR MUSICA #");
 		Musica disco = null;
@@ -136,10 +175,41 @@ public class Musica {
 		for (int i = 1; i <= TiendaMusica.listaMusica.size(); i++) {
 			disco = TiendaMusica.listaMusica.get(i);
 			if (disco.isActivo()) {
-				System.out.println("Codigo de disco: " + disco.getCodigo() + "; Título: " + disco.getTitulo()
-						+ "; Autor: " + disco.getAutor() + "; Formato: " + disco.getFormato());
+				System.out
+						.println("Codigo de disco: " + disco.getCodigo()
+								+ "; Título: " + disco.getTitulo()
+								+ "; Autor: " + disco.getAutor()
+								+ "; Formato: " + disco.getFormato());
 			}
 		}
+		TiendaMusica.introducirComando();
+	}*/
+
+	// Listado de discos
+	public static void listarMusica() {
+		Musica disco = null;
+		int discosActivos = 0;
+
+		//Recorremos la lista de discos y mostramos sus datos
+		for (int i = 1; i <= TiendaMusica.listaMusica.size(); i++) {
+			disco = TiendaMusica.listaMusica.get(i);
+			//Solo mostramos los discos activos (es decir los que no se han borrado)
+			if (disco.isActivo()) {
+				System.out
+						.println("Codigo de disco: " + disco.getCodigo()
+								+ "; Título: " + disco.getTitulo()
+								+ "; Autor: " + disco.getAutor()
+								+ "; Formato: " + disco.getFormato());
+				discosActivos++;
+			}
+		}
+
+		//Si la lista está vacia o no hemos encontrado discos activos mostraremos un mensaje indicndo que no existen discos
+		if ((TiendaMusica.listaMusica.size() == 0) || discosActivos == 0) {
+			System.out.println("No existe ningún disco");
+		}
+
+		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 	}
 

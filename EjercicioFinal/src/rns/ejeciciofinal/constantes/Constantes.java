@@ -27,6 +27,7 @@ public final class Constantes {
 	public final static String FORMATO_CD = "CD";
 	public final static String FORMATO_CASETE = "Casete";
 	public final static String FORMATO_VINILO = "Vinilo";
+	public final static String FORMATO_DVD = "Dvd";
 
 	public final static String[] LISTA_ACCIONES = { LISTAR, ELIMINAR, CREAR };
 	public final static String[] LISTA_ENTIDADES = { MUSICA, CLIENTE, VENTA };
@@ -36,13 +37,16 @@ public final class Constantes {
 
 	public final static String[] LISTA_SINO = { SI, NO };
 
-	public final static String[] LISTA_FORMATOS = { FORMATO_CD, FORMATO_CASETE, FORMATO_VINILO };
+	public final static String[] LISTA_FORMATOS = { FORMATO_CD, FORMATO_CASETE,
+			FORMATO_VINILO, FORMATO_DVD };
 
 	public static String[] getListaFormatos() {
 		return LISTA_FORMATOS;
 	}
 
-	public final static String[] LISTA_COMANDOS = { CREAR_MUSICA, CREAR_CLIENTE, CREAR_VENTA, LISTAR_MUSICA,
-			LISTAR_CLIENTES, LISTAR_VENTAS, ELIMINAR_MUSICA, ELIMINAR_CLIENTE, ELIMINAR_VENTA, CERRAR };
+	public final static String[] LISTA_COMANDOS = { CREAR_MUSICA,
+			CREAR_CLIENTE, CREAR_VENTA, LISTAR_MUSICA, LISTAR_CLIENTES,
+			LISTAR_VENTAS, ELIMINAR_MUSICA, ELIMINAR_CLIENTE, ELIMINAR_VENTA,
+			CERRAR };
 
 }

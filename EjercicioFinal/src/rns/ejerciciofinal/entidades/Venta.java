@@ -2,7 +2,7 @@ package rns.ejerciciofinal.entidades;
 
 import rns.ejerciciofinal.TiendaMusica;
 
-public class Venta extends Cliente {
+public class Venta {
 
 	public static void crearVenta() {
 		System.out.println("# CREAR VENTA #");

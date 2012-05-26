@@ -6,6 +6,7 @@ import java.util.Scanner;
 import rns.ejeciciofinal.constantes.Constantes;
 import rns.ejerciciofinal.entidades.Cliente;
 import rns.ejerciciofinal.entidades.Musica;
+import rns.ejerciciofinal.entidades.Vendedor;
 import rns.ejerciciofinal.entidades.Venta;
 import rns.ejerciciofinal.utilidades.Utilidades;
 
@@ -13,6 +14,7 @@ public class TiendaMusica {
 
 	public static HashMap<Integer, Cliente> listaClientes = new HashMap<Integer, Cliente>();
 	public static HashMap<Integer, Musica> listaMusica = new HashMap<Integer, Musica>();
+	public static HashMap<Integer, Vendedor> listaVendedores = new HashMap<Integer, Vendedor>();
 
 	/**
 	 * @param args
@@ -21,13 +23,17 @@ public class TiendaMusica {
 
 		// TODO INI comentar esta llamada
 		System.out.println("### CARGANDO CLIENTES DE PRUEBA");
-		Cliente.cargarClientes();
+		//Cliente.cargarClientes();
 		System.out.println();
 		System.out.println("### CARGANDO MUSICA DE PRUEBA");
 		Musica.cargarMusica();
 		System.out.println();
 		// cargarMusica();
 		// TODO FIN comentar esta llamada
+		// Cargamos los vendedores disponibles, se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa
+		Utilidades.cargarVendedores();
+
+		//Llamamos al menú principal
 		introducirComando();
 
 	}
@@ -60,9 +66,9 @@ public class TiendaMusica {
 			accion = Utilidades.capturarComando(comando, 1);
 			entidad = Utilidades.capturarComando(comando, 2);
 			codigo = Utilidades.capturarComando(comando, 3);
-			System.out.println("Accion: " + accion);
-			System.out.println("Entidad: " + entidad);
-			System.out.println("Codigo: " + codigo);
+			//			System.out.println("Accion: " + accion);
+			//			System.out.println("Entidad: " + entidad);
+			//			System.out.println("Codigo: " + codigo);
 
 			sb = new StringBuffer("");
 			sb.append(accion);
@@ -70,32 +76,6 @@ public class TiendaMusica {
 			sb.append(entidad);
 			comandoCapturado = sb.toString().trim();
 
-			/*
-			  if (Utilidades.compruebaString(accion,
-			  Constantes.LISTA_ACCIONES)) { if
-			  (Utilidades.compruebaString(entidad, Constantes.LISTA_ENTIDADES))
-			  { if (numeroTokens == 2) { comandoValido = true; if
-			  (comando.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
-			  Cliente.crearCliente(); } else if
-			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-			  Cliente.eliminarCliente(); } else if
-			  (comando.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
-			  Cliente.listarClientes(); } else if
-			  (comando.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
-			  Musica.crearMusica(); } else if
-			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-			  Musica.eliminarMusica(); } else if
-			  (comando.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
-			  Musica.listarMusica(); } else if
-			  (comando.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
-			  Venta.crearVenta(); } else if
-			  (comando.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-			  Venta.eliminarVenta(); } else if
-			  (comando.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
-			  Venta.listarVentas(); } } }
-			  
-			  }
-			 */
 			if (numeroTokens <= 2) {
 				if (Utilidades.compruebaString(comandoCapturado,
 						Constantes.LISTA_COMANDOS)) {
@@ -105,8 +85,7 @@ public class TiendaMusica {
 						Cliente.crearCliente();
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-						System.out.println("Cliente.eliminarCliente();");
-						// Cliente.eliminarCliente();
+						Cliente.eliminarCliente();
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
 						Cliente.listarClientes();
@@ -115,8 +94,7 @@ public class TiendaMusica {
 						Musica.crearMusica();
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-						System.out.println("Musica.eliminarMusica();");
-						// Musica.eliminarMusica();
+						Musica.eliminarMusica();
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
 						Musica.listarMusica();
@@ -132,17 +110,23 @@ public class TiendaMusica {
 						Venta.listarVentas();
 					}
 				}
-				/*
-								else {
-									System.out.println("ERROR - Comando no reconocido");
-									System.out
-											.println("El listado de comandos permitidos es el siguiente:"
-													+ "\n");
-									for (String comandoListado : listaComandos) {
-										System.out.println(comandoListado);
-									}
-								}*/
+			}
 
+			if (numeroTokens == 3) {
+				if (comandoCapturado
+						.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
+					Cliente.eliminarCliente(Integer.parseInt(codigo));
+				} else if (comandoCapturado
+						.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
+					System.out.println("Musica.eliminarMusica();");
+					// Musica.eliminarMusica(codigo);
+
+				} else if (comandoCapturado
+						.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
+					System.out.println("Venta.eliminarVenta();");
+					// Venta.eliminarVenta(codigo);
+
+				}
 			}
 
 		} while (!comandoValido);
@@ -150,6 +134,6 @@ public class TiendaMusica {
 		if (comando.equalsIgnoreCase(Constantes.CERRAR)) {
 			System.out.println("Gracias por su visita");
 		}
-	}
 
+	}
 }
