@@ -108,6 +108,15 @@ public class TiendaMusica {
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
 						Venta.listarVentas();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.CREAR_VENDEDOR)) {
+						Vendedor.crearVendedor();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
+						Vendedor.eliminarVendedor();
+					} else if (comandoCapturado
+							.equalsIgnoreCase(Constantes.LISTAR_VENDEDORES)) {
+						Vendedor.listarVendedores();
 					}
 				}
 			}
