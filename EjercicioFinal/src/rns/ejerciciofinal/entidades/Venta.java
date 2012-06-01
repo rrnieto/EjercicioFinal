@@ -6,6 +6,15 @@ public class Venta {
 
 	public static void crearVenta() {
 		System.out.println("# CREAR VENTA #");
+
+		if (Vendedor.comprobarVendedores()) {
+			System.out.println("Existen vendedores");
+
+		} else {
+			System.out.println("No existen vendedores");
+			System.out
+					.println("Se debe crear al menos un vendedor antes de continuar.");
+		}
 		TiendaMusica.introducirComando();
 	}
 

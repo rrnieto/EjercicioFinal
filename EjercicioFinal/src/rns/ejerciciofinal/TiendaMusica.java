@@ -31,8 +31,7 @@ public class TiendaMusica {
 		// cargarMusica();
 		// TODO FIN comentar esta llamada
 		// Cargamos los vendedores disponibles, se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa
-		Utilidades.cargarVendedores();
-
+		Vendedor.cargarVendedores();
 		//Llamamos al menú principal
 		introducirComando();
 
@@ -48,7 +47,7 @@ public class TiendaMusica {
 		String entidad = "";
 		String codigo = "";
 		String comandoCapturado = "";
-		StringBuffer sb = null;
+		StringBuilder sb = null;
 
 		do {
 
@@ -70,7 +69,7 @@ public class TiendaMusica {
 			//			System.out.println("Entidad: " + entidad);
 			//			System.out.println("Codigo: " + codigo);
 
-			sb = new StringBuffer("");
+			sb = new StringBuilder("");
 			sb.append(accion);
 			sb.append(" ");
 			sb.append(entidad);
@@ -135,12 +134,17 @@ public class TiendaMusica {
 					System.out.println("Venta.eliminarVenta();");
 					// Venta.eliminarVenta(codigo);
 
+				} else if (comandoCapturado
+						.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
+					Vendedor.eliminarVendedor(Integer.parseInt(codigo));
 				}
 			}
 
 		} while (!comandoValido);
 
 		if (comando.equalsIgnoreCase(Constantes.CERRAR)) {
+			//Antes de cerrar volcaremos los datos que tenemos en memoria sobre los vendedores y las ventas a su fichero de texto correspondiente
+			Utilidades.guardarCambios();
 			System.out.println("Gracias por su visita");
 		}
 

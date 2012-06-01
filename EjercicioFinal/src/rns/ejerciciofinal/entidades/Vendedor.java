@@ -1,8 +1,14 @@
 package rns.ejerciciofinal.entidades;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import rns.ejerciciofinal.TiendaMusica;
 import rns.ejerciciofinal.constantes.Constantes;
@@ -202,24 +208,68 @@ public class Vendedor extends Persona {
 
 	}
 
-	//Este método solo se ha utilizado durante las pruebas para cargar un listado de vendedores
+	//Método para cargar los vendedores. 
+	//Se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa.
 	public static void cargarVendedores() {
-		Vendedor vendedor = null;
-		String nombre;
-		String apellido;
+		System.out.println("# Cargando vendedores");
+		Vendedor vend = null;
+		FileReader leer = null;
 
-		int codigoVendedor = 0;
+		int codigo = 0;
+		String nombre = "";
+		String apellido = "";
+		BufferedReader leerDeFichero = null;
+		String cadena = "";
+		StringTokenizer stk = null;
 
-		for (int i = 0; i < 10; i++) {
+		try {
+			leer = new FileReader("/vendedores.txt");
+			leerDeFichero = new BufferedReader(leer);
 
-			nombre = ("Nombre" + (i + 1));
-			apellido = ("Apellido" + (i + 1));
+			cadena = leerDeFichero.readLine();
 
-			codigoVendedor = obtenerCodigoVendedor(TiendaMusica.listaVendedores);
-			vendedor = new Vendedor(codigoVendedor, nombre, apellido);
-			TiendaMusica.listaVendedores.put(codigoVendedor, vendedor);
-			System.out.println("Vendedor con codigo: " + codigoVendedor
-					+ " creado.");
+			while (cadena != null) {
+				//Dividimos la cadena linea leida
+				stk = new StringTokenizer(cadena, ";");
+
+				codigo = Integer.parseInt(stk.nextToken());
+				nombre = stk.nextToken();
+				apellido = stk.nextToken();
+
+				vend = new Vendedor(codigo, nombre, apellido);
+
+				System.out.println("Vendedor " + vend.getCodigo() + " "
+						+ vend.getNombre() + " " + vend.getApellido());
+
+				//Añadimos cada vendedor al listado en memoria
+				TiendaMusica.listaVendedores.put(vend.getCodigo(), vend);
+
+				cadena = leerDeFichero.readLine();
+			}
+			//Una vez finalizada la lectura cerramos el fichero
+			leer.close();
+
+		} //En caso de que no exista el fichero capturamos la excepción correspondiente, informamos al usuario y llamamos al método que creará el fichero
+		catch (FileNotFoundException fnfe) {
+			System.out.println("No se ha encontrado el fichero de vendedores.");
+			crearFicheroVendedores();
+		} catch (IOException ioe) {
+			System.out
+					.println("Se ha producido un error al procesar el fichero");
+		}
+
+	}
+
+	//Este metodo crea el fichero de texto para almacenar los vendedores. Se crea vacío y el usuario deberá crear vendedores antes de poder realizar una venta.
+	public static void crearFicheroVendedores() {
+		try {
+			System.out.println("Creamos el fichero vendedores.txt");
+			FileWriter fichero = new FileWriter("/vendedores.txt");
+			System.out.println("Fichero vendedores.txt creado con éxito");
+			fichero.flush();
+		} catch (IOException ioe) {
+			System.out
+					.println("Se ha producido un error al procesar el fichero de vendedores");
 		}
 	}
 
@@ -242,6 +292,26 @@ public class Vendedor extends Persona {
 		}
 
 		return codigoVendedorValido;
+	}
+
+	public static boolean comprobarVendedores() {
+		boolean vendedores = false;
+		Vendedor vendedor = null;
+		int vendedoresActivos = 0;
+		//Recorremos la lista de vendedores
+		for (int i = 1; i <= TiendaMusica.listaVendedores.size(); i++) {
+			vendedor = TiendaMusica.listaVendedores.get(i);
+			//Solo tenemos en cuenta los vendedores activos (es decir los que no se han borrado)
+			if (vendedor.isActivo()) {
+				vendedoresActivos++;
+			}
+		}
+
+		if (TiendaMusica.listaVendedores.size() != 0 && vendedoresActivos != 0) {
+			vendedores = true;
+		}
+
+		return vendedores;
 	}
 
 	//Inicio de GETTERS y SETTERS
