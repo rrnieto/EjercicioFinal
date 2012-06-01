@@ -1,5 +1,6 @@
 package rns.ejerciciofinal;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -32,6 +33,7 @@ public class TiendaMusica {
 		// TODO FIN comentar esta llamada
 		// Cargamos los vendedores disponibles, se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa
 		Vendedor.cargarVendedores();
+		Venta.cargarVentas();
 		//Llamamos al menú principal
 		introducirComando();
 
@@ -144,8 +146,14 @@ public class TiendaMusica {
 
 		if (comando.equalsIgnoreCase(Constantes.CERRAR)) {
 			//Antes de cerrar volcaremos los datos que tenemos en memoria sobre los vendedores y las ventas a su fichero de texto correspondiente
-			Utilidades.guardarCambios();
-			System.out.println("Gracias por su visita");
+			try {
+				Vendedor.guardarCambios();
+			} catch (IOException ioe) {
+				System.out
+						.println("# Se ha producido un error al procesar el fichero de vendedores, los cambios no se han guardado");
+			}
+
+			System.out.println("# Gracias por su visita");
 		}
 
 	}

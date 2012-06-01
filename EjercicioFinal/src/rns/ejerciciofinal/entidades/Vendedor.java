@@ -17,7 +17,6 @@ import rns.ejerciciofinal.utilidades.Utilidades;
 //La clase Vendedor hereda de la calse Persona
 public class Vendedor extends Persona {
 
-	private String dni = "";
 	//La variable boolean activo la utilizaremos como un marcador para saber si el vendedor se ha borrado o no
 	private boolean activo = true;
 	private int codigo;
@@ -314,6 +313,39 @@ public class Vendedor extends Persona {
 		return vendedores;
 	}
 
+	//Este metodo guarda los datos que hay en la memoria sobre los cambios realizados en los vendedores y los vuelca a su fichero
+	public static void guardarCambios() throws IOException {
+		Vendedor vend = null;
+		int codigo;
+		String nombre;
+		String apellido;
+		FileWriter ficheroVendedores = new FileWriter("/vendedores.txt");
+		StringBuilder registro = null;
+		//Guardar cambios en los vendedores
+		if (comprobarVendedores()) {
+			for (int i = 1; i <= TiendaMusica.listaVendedores.size(); i++) {
+
+				vend = TiendaMusica.listaVendedores.get(i);
+				if (vend.isActivo()) {
+					codigo = vend.getCodigo();
+					nombre = vend.getNombre();
+					apellido = vend.getApellido();
+					registro = new StringBuilder("");
+					registro.append(codigo);
+					registro.append(";");
+					registro.append(nombre);
+					registro.append(";");
+					registro.append(apellido);
+					registro.append(System.getProperty("line.separator"));
+					ficheroVendedores.write(registro.toString());
+				}
+
+			}
+		}
+		ficheroVendedores.flush();
+		ficheroVendedores.close();
+	}
+
 	//Inicio de GETTERS y SETTERS
 	public boolean isActivo() {
 		return activo;
@@ -321,14 +353,6 @@ public class Vendedor extends Persona {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
-	}
-
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
 	}
 
 	public int getCodigo() {

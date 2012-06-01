@@ -4,6 +4,9 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rns.ejerciciofinal.TiendaMusica;
+import rns.ejerciciofinal.entidades.Vendedor;
+
 public class Utilidades {
 
 	public static boolean compruebaString(String comando, String[] lista) {
@@ -56,10 +59,7 @@ public class Utilidades {
 		return cadena;
 	}
 
-	//Este metodo guarda los datos que hay en la memoria sobre los cambios realizados tanto en los vendedores como en las ventas y las vuelca a su fichero
-	public static void guardarCambios() {
-
-	}
+	
 
 	//INICIO METODOS PARA VALIDAR EL NIF
 	//Metodo que valida el patron correcto de un DNI, números y letra separados por un guion
