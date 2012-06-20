@@ -7,14 +7,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import rns.ejerciciofinal.TiendaMusica;
 import rns.ejerciciofinal.constantes.Constantes;
 import rns.ejerciciofinal.utilidades.Utilidades;
 
-//La clase Vendedor hereda de la calse Persona
+//La clase Vendedor hereda de la clase Persona
 public class Vendedor extends Persona {
 
 	//La variable boolean activo la utilizaremos como un marcador para saber si el vendedor se ha borrado o no
@@ -34,17 +36,38 @@ public class Vendedor extends Persona {
 		Vendedor vendedor = null;
 		int vendedoresActivos = 0;
 
-		//Recorremos la lista de vendedores y mostramos sus datos
-		for (int i = 1; i <= TiendaMusica.listaVendedores.size(); i++) {
-			vendedor = TiendaMusica.listaVendedores.get(i);
-			//Solo mostramos los vendedores activos (es decir los que no se han borrado)
-			if (vendedor.isActivo()) {
-				System.out.println("Vendedor: " + vendedor.getCodigo()
-						+ "; Nombre: " + vendedor.getNombre() + "; Apellido: "
-						+ vendedor.getApellido());
-				vendedoresActivos++;
+		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
+
+		while (it.hasNext()) {
+			Integer key = it.next();
+			vendedor = null;
+			if (TiendaMusica.listaVendedores.get(key) != null) {
+				vendedor = TiendaMusica.listaVendedores.get(key);
+				//Solo mostramos los vendedores activos (es decir los que no se han borrado)
+				if (vendedor.isActivo()) {
+					System.out.println("Vendedor: " + vendedor.getCodigo()
+							+ "; Nombre: " + vendedor.getNombre()
+							+ "; Apellido: " + vendedor.getApellido());
+					vendedoresActivos++;
+				}
 			}
 		}
+
+		//Recorremos la lista de vendedores y mostramos sus datos		
+		//		for (int i = 1; i <= tamLista; i++) {
+		//			vendedor = null;
+		//			if (TiendaMusica.listaVendedores.get(i) != null) {
+		//				vendedor = TiendaMusica.listaVendedores.get(i);
+		//
+		//				//Solo mostramos los vendedores activos (es decir los que no se han borrado)
+		//				if (vendedor.isActivo()) {
+		//					System.out.println("Vendedor: " + vendedor.getCodigo()
+		//							+ "; Nombre: " + vendedor.getNombre()
+		//							+ "; Apellido: " + vendedor.getApellido());
+		//					vendedoresActivos++;
+		//				}
+		//			}
+		//		}
 
 		//Si la lista está vacia o no hemos encontrado vendedores activos mostraremos un mensaje indicndo que no existen vendedores
 		if ((TiendaMusica.listaVendedores.size() == 0)
@@ -185,9 +208,6 @@ public class Vendedor extends Persona {
 			apellido = entradaPantalla.nextLine();
 		} while (apellido.equals(""));
 
-		System.out.print("Introduce el DNI del vendedor:");
-		entradaPantalla = new Scanner(System.in);
-
 		//Calculamos el código de vendedor que se va a asignar
 		codigoVendedor = Vendedor
 				.obtenerCodigoVendedor(TiendaMusica.listaVendedores);
@@ -278,11 +298,14 @@ public class Vendedor extends Persona {
 		int codigoVendedorValido = 0;
 		int codigoLeido = 0;
 
+		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
+
 		if (listaVendedores.size() == 0) {
 			codigoVendedorValido = 1;
 		} else {
-			for (int i = 1; i <= listaVendedores.size(); i++) {
-				codigoLeido = listaVendedores.get(i).getCodigo();
+			while (it.hasNext()) {
+				Integer key = it.next();
+				codigoLeido = listaVendedores.get(key).getCodigo();
 				if (codigoLeido >= codigoVendedorValido) {
 					codigoVendedorValido = codigoLeido + 1;
 				}
@@ -297,9 +320,13 @@ public class Vendedor extends Persona {
 		boolean vendedores = false;
 		Vendedor vendedor = null;
 		int vendedoresActivos = 0;
+
+		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
+
 		//Recorremos la lista de vendedores
-		for (int i = 1; i <= TiendaMusica.listaVendedores.size(); i++) {
-			vendedor = TiendaMusica.listaVendedores.get(i);
+		while (it.hasNext()) {
+			Integer key = it.next();
+			vendedor = TiendaMusica.listaVendedores.get(key);
 			//Solo tenemos en cuenta los vendedores activos (es decir los que no se han borrado)
 			if (vendedor.isActivo()) {
 				vendedoresActivos++;
@@ -321,11 +348,16 @@ public class Vendedor extends Persona {
 		String apellido;
 		FileWriter ficheroVendedores = new FileWriter("/vendedores.txt");
 		StringBuilder registro = null;
+		
+		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
+		
+		
 		//Guardar cambios en los vendedores
 		if (comprobarVendedores()) {
-			for (int i = 1; i <= TiendaMusica.listaVendedores.size(); i++) {
+			while (it.hasNext()) {
+				Integer key = it.next();
 
-				vend = TiendaMusica.listaVendedores.get(i);
+				vend = TiendaMusica.listaVendedores.get(key);
 				if (vend.isActivo()) {
 					codigo = vend.getCodigo();
 					nombre = vend.getNombre();
@@ -344,6 +376,16 @@ public class Vendedor extends Persona {
 		}
 		ficheroVendedores.flush();
 		ficheroVendedores.close();
+	}
+
+	//Metodo que extrae las keys de un hashmap pasado por parámetro
+	//Devuelve un iterator con las keys
+	public static Iterator<Integer> calculaKeys(
+			HashMap<Integer, Vendedor> listaVendedores) {
+		Iterator<Integer> itKeys = null;
+		Set<Integer> keys = listaVendedores.keySet();
+		itKeys = keys.iterator();
+		return itKeys;
 	}
 
 	//Inicio de GETTERS y SETTERS

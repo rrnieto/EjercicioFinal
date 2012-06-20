@@ -1,5 +1,8 @@
 package rns.ejerciciofinal.utilidades;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

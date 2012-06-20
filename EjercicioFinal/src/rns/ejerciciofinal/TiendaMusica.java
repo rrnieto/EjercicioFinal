@@ -51,103 +51,109 @@ public class TiendaMusica {
 		String comandoCapturado = "";
 		StringBuilder sb = null;
 
-		do {
+		try {
+			do {
 
-			/* Leemos el comando introducido por teclado */
-			System.out.println("Introducir comando: ");
-			entradaPantalla = new Scanner(System.in);
+				/* Leemos el comando introducido por teclado */
+				System.out.println("Introducir comando: ");
+				entradaPantalla = new Scanner(System.in);
 
-			// Almacenamos el comando en la variable comando
-			comando = entradaPantalla.nextLine();
+				// Almacenamos el comando en la variable comando
+				comando = entradaPantalla.nextLine();
 
-			// calculamos el numero de tokens en que está dividido el
-			// comando introducido, el separador es el espacio
-			numeroTokens = Utilidades.obtenerNumeroDeTokens(comando);
+				// calculamos el numero de tokens en que está dividido el
+				// comando introducido, el separador es el espacio
+				numeroTokens = Utilidades.obtenerNumeroDeTokens(comando);
 
-			accion = Utilidades.capturarComando(comando, 1);
-			entidad = Utilidades.capturarComando(comando, 2);
-			codigo = Utilidades.capturarComando(comando, 3);
-			//			System.out.println("Accion: " + accion);
-			//			System.out.println("Entidad: " + entidad);
-			//			System.out.println("Codigo: " + codigo);
+				accion = Utilidades.capturarComando(comando, 1);
+				entidad = Utilidades.capturarComando(comando, 2);
+				codigo = Utilidades.capturarComando(comando, 3);
+				//			System.out.println("Accion: " + accion);
+				//			System.out.println("Entidad: " + entidad);
+				//			System.out.println("Codigo: " + codigo);
 
-			sb = new StringBuilder("");
-			sb.append(accion);
-			sb.append(" ");
-			sb.append(entidad);
-			comandoCapturado = sb.toString().trim();
+				sb = new StringBuilder("");
+				sb.append(accion);
+				sb.append(" ");
+				sb.append(entidad);
+				comandoCapturado = sb.toString().trim();
 
-			if (numeroTokens <= 2) {
-				if (Utilidades.compruebaString(comandoCapturado,
-						Constantes.LISTA_COMANDOS)) {
-					comandoValido = true;
+				if (numeroTokens <= 2) {
+					if (Utilidades.compruebaString(comandoCapturado,
+							Constantes.LISTA_COMANDOS)) {
+						comandoValido = true;
+						if (comandoCapturado
+								.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
+							Cliente.crearCliente();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
+							Cliente.eliminarCliente();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
+							Cliente.listarClientes();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
+							Musica.crearMusica();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
+							Musica.eliminarMusica();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
+							Musica.listarMusica();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
+							Venta.crearVenta();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
+							System.out.println("Venta.eliminarVenta();");
+							// Venta.eliminarVenta();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
+							Venta.listarVentas();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.CREAR_VENDEDOR)) {
+							Vendedor.crearVendedor();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
+							Vendedor.eliminarVendedor();
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.LISTAR_VENDEDORES)) {
+							Vendedor.listarVendedores();
+						}
+					}
+				}
+
+				if (numeroTokens == 3) {
 					if (comandoCapturado
-							.equalsIgnoreCase(Constantes.CREAR_CLIENTE)) {
-						Cliente.crearCliente();
-					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-						Cliente.eliminarCliente();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.LISTAR_CLIENTES)) {
-						Cliente.listarClientes();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.CREAR_MUSICA)) {
-						Musica.crearMusica();
+						Cliente.eliminarCliente(Integer.parseInt(codigo));
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-						Musica.eliminarMusica();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.LISTAR_MUSICA)) {
-						Musica.listarMusica();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.CREAR_VENTA)) {
-						Venta.crearVenta();
+						System.out.println("Musica.eliminarMusica();");
+						// Musica.eliminarMusica(codigo);
+
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
 						System.out.println("Venta.eliminarVenta();");
-						// Venta.eliminarVenta();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
-						Venta.listarVentas();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.CREAR_VENDEDOR)) {
-						Vendedor.crearVendedor();
+						// Venta.eliminarVenta(codigo);
+
 					} else if (comandoCapturado
 							.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
-						Vendedor.eliminarVendedor();
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.LISTAR_VENDEDORES)) {
-						Vendedor.listarVendedores();
+						Vendedor.eliminarVendedor(Integer.parseInt(codigo));
 					}
 				}
-			}
 
-			if (numeroTokens == 3) {
-				if (comandoCapturado
-						.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-					Cliente.eliminarCliente(Integer.parseInt(codigo));
-				} else if (comandoCapturado
-						.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-					System.out.println("Musica.eliminarMusica();");
-					// Musica.eliminarMusica(codigo);
-
-				} else if (comandoCapturado
-						.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-					System.out.println("Venta.eliminarVenta();");
-					// Venta.eliminarVenta(codigo);
-
-				} else if (comandoCapturado
-						.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
-					Vendedor.eliminarVendedor(Integer.parseInt(codigo));
-				}
-			}
-
-		} while (!comandoValido);
+			} while (!comandoValido);
+		} catch (NumberFormatException nfe) {
+			System.out.println("No ha introducido un número válido");
+			introducirComando();
+		}
 
 		if (comando.equalsIgnoreCase(Constantes.CERRAR)) {
 			//Antes de cerrar volcaremos los datos que tenemos en memoria sobre los vendedores y las ventas a su fichero de texto correspondiente
 			try {
 				Vendedor.guardarCambios();
+				
 			} catch (IOException ioe) {
 				System.out
 						.println("# Se ha producido un error al procesar el fichero de vendedores, los cambios no se han guardado");
