@@ -2,7 +2,9 @@ package rns.ejerciciofinal.entidades;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 
 import rns.ejerciciofinal.TiendaMusica;
 import rns.ejerciciofinal.constantes.Constantes;
@@ -29,6 +31,8 @@ public class Cliente extends Persona {
 	public static void listarClientes() {
 		Cliente cliente = null;
 		int clientesActivos = 0;
+		Scanner entradaPantalla;
+		String eliminar = null;
 
 		//Recorremos la lista de clientes y mostramos sus datos
 		for (int i = 1; i <= TiendaMusica.listaClientes.size(); i++) {
@@ -45,6 +49,16 @@ public class Cliente extends Persona {
 		//Si la lista está vacia o no hemos encontrado clientes activos mostraremos un mensaje indicndo que no existen clientes
 		if ((TiendaMusica.listaClientes.size() == 0) || clientesActivos == 0) {
 			System.out.println("No existe ningún cliente");
+			System.out.println("¿Quiere crear un cliente?");
+			entradaPantalla = new Scanner(System.in);
+			eliminar = entradaPantalla.nextLine();
+			//Comprobamos que el comando introducido es un SI o un NO
+			if (Utilidades.compruebaString(eliminar, Constantes.LISTA_SINO)) {
+				if (eliminar.equalsIgnoreCase(Constantes.SI)) {
+					//Llamamos al método de creacion de cliente
+					crearCliente();
+				}
+			}
 		}
 
 		//Volvemos al menu inicial
@@ -247,6 +261,40 @@ public class Cliente extends Persona {
 		}
 
 		return codigoClienteValido;
+	}
+
+	public static boolean comprobarClientes() {
+		boolean clientes = false;
+		Cliente cliente = null;
+		int clientesActivos = 0;
+
+		Iterator<Integer> it = calculaKeys(TiendaMusica.listaClientes);
+
+		//Recorremos la lista de clientes
+		while (it.hasNext()) {
+			Integer key = it.next();
+			cliente = TiendaMusica.listaClientes.get(key);
+			//Solo tenemos en cuenta los clientes activos (es decir los que no se han borrado)
+			if (cliente.isActivo()) {
+				clientesActivos++;
+			}
+		}
+
+		if (TiendaMusica.listaClientes.size() != 0 && clientesActivos != 0) {
+			clientes = true;
+		}
+
+		return clientes;
+	}
+
+	//Metodo que extrae las keys de un hashmap pasado por parámetro
+	//Devuelve un iterator con las keys
+	public static Iterator<Integer> calculaKeys(
+			HashMap<Integer, Cliente> listaCliente) {
+		Iterator<Integer> itKeys = null;
+		Set<Integer> keys = listaCliente.keySet();
+		itKeys = keys.iterator();
+		return itKeys;
 	}
 
 	//Inicio de GETTERS y SETTERS

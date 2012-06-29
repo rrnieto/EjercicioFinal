@@ -16,6 +16,7 @@ public class TiendaMusica {
 	public static HashMap<Integer, Cliente> listaClientes = new HashMap<Integer, Cliente>();
 	public static HashMap<Integer, Musica> listaMusica = new HashMap<Integer, Musica>();
 	public static HashMap<Integer, Vendedor> listaVendedores = new HashMap<Integer, Vendedor>();
+	public static HashMap<Integer, Venta> listaVentas = new HashMap<Integer, Venta>();
 
 	/**
 	 * @param args
@@ -106,7 +107,7 @@ public class TiendaMusica {
 						} else if (comandoCapturado
 								.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
 							System.out.println("Venta.eliminarVenta();");
-							// Venta.eliminarVenta();
+							Venta.eliminarVenta();
 						} else if (comandoCapturado
 								.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
 							Venta.listarVentas();
@@ -124,22 +125,25 @@ public class TiendaMusica {
 				}
 
 				if (numeroTokens == 3) {
-					if (comandoCapturado
-							.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
-						Cliente.eliminarCliente(Integer.parseInt(codigo));
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
-						System.out.println("Musica.eliminarMusica();");
-						// Musica.eliminarMusica(codigo);
+					if (Utilidades.compruebaString(comandoCapturado,
+							Constantes.LISTA_COMANDOS)) {
+						comandoValido = true;
+						if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_CLIENTE)) {
+							Cliente.eliminarCliente(Integer.parseInt(codigo));
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_MUSICA)) {
+							Musica.eliminarMusica(Integer.parseInt(codigo));
 
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-						System.out.println("Venta.eliminarVenta();");
-						// Venta.eliminarVenta(codigo);
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
+							System.out.println("Venta.eliminarVenta();");
+							Venta.eliminarVenta(Integer.parseInt(codigo));
 
-					} else if (comandoCapturado
-							.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
-						Vendedor.eliminarVendedor(Integer.parseInt(codigo));
+						} else if (comandoCapturado
+								.equalsIgnoreCase(Constantes.ELIMINAR_VENDEDOR)) {
+							Vendedor.eliminarVendedor(Integer.parseInt(codigo));
+						}
 					}
 				}
 
@@ -153,7 +157,8 @@ public class TiendaMusica {
 			//Antes de cerrar volcaremos los datos que tenemos en memoria sobre los vendedores y las ventas a su fichero de texto correspondiente
 			try {
 				Vendedor.guardarCambios();
-				
+				Venta.guardarCambios();
+
 			} catch (IOException ioe) {
 				System.out
 						.println("# Se ha producido un error al procesar el fichero de vendedores, los cambios no se han guardado");

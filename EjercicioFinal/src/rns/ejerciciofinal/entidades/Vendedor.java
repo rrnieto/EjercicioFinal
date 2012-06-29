@@ -53,22 +53,6 @@ public class Vendedor extends Persona {
 			}
 		}
 
-		//Recorremos la lista de vendedores y mostramos sus datos		
-		//		for (int i = 1; i <= tamLista; i++) {
-		//			vendedor = null;
-		//			if (TiendaMusica.listaVendedores.get(i) != null) {
-		//				vendedor = TiendaMusica.listaVendedores.get(i);
-		//
-		//				//Solo mostramos los vendedores activos (es decir los que no se han borrado)
-		//				if (vendedor.isActivo()) {
-		//					System.out.println("Vendedor: " + vendedor.getCodigo()
-		//							+ "; Nombre: " + vendedor.getNombre()
-		//							+ "; Apellido: " + vendedor.getApellido());
-		//					vendedoresActivos++;
-		//				}
-		//			}
-		//		}
-
 		//Si la lista está vacia o no hemos encontrado vendedores activos mostraremos un mensaje indicndo que no existen vendedores
 		if ((TiendaMusica.listaVendedores.size() == 0)
 				|| vendedoresActivos == 0) {
@@ -187,6 +171,8 @@ public class Vendedor extends Persona {
 		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 	}
+	
+
 
 	/* Creación de vendedor */
 	public static void crearVendedor() {
