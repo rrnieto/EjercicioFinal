@@ -1,3 +1,4 @@
+//REVISADO
 package rns.ejerciciofinal.utilidades;
 
 import java.util.StringTokenizer;
@@ -6,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class Utilidades {
 
+	//Funcion que comprueba si los comandos introducidos están en las listas predeterminadas
 	public static boolean compruebaString(String comando, String[] lista) {
 		boolean existe = false;
 
@@ -56,8 +58,6 @@ public class Utilidades {
 		return cadena;
 	}
 
-	
-
 	//INICIO METODOS PARA VALIDAR EL NIF
 	//Metodo que valida el patron correcto de un DNI, números y letra separados por un guion
 	public static boolean validarNif(String dni) {
@@ -93,5 +93,15 @@ public class Utilidades {
 	}
 
 	//FIN METODOS PARA VALIDAR EL NIF
+
+	//La llamada a este método escribe la cabecera de la aplicación
+	public static void cabecera() {
+		System.out.println();
+		System.out.println("############################");
+		System.out.println("##### TIENDA DE MUSICA #####");
+		System.out.println("#############################");
+		System.out.println("#####");
+		System.out.println();
+	}
 
 }

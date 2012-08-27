@@ -1,3 +1,4 @@
+//REVISADO
 package rns.ejerciciofinal.entidades;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class Musica {
 	private String autor;
 	private String formato;
 	private int codigo;
+	//La variable boolean activo la utilizaremos como un marcador para saber si el disco se ha borrado o no
 	private boolean activo = true;
 
 	public boolean isActivo() {
@@ -25,6 +27,7 @@ public class Musica {
 		this.activo = activo;
 	}
 
+	//Objeto clase Musica
 	public Musica(String titulo, String autor, String formato, int codigo) {
 		this.titulo = titulo;
 		this.autor = autor;
@@ -32,6 +35,7 @@ public class Musica {
 		this.codigo = codigo;
 	}
 
+	//Obtenemos el codigo de musica que tenemos que utilizar
 	public static int obtenerCodigoMusica(HashMap<Integer, Musica> listaMusica) {
 		int codigoValido = 0;
 		int codigoLeido = 0;
@@ -50,14 +54,7 @@ public class Musica {
 		return codigoValido;
 	}
 
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-
+	//Cargamos Musica de prueba
 	public static void cargarMusica() {
 		Musica musica = null;
 		String titulo;
@@ -77,6 +74,7 @@ public class Musica {
 		}
 	}
 
+	//Funcion para la creación de un nuevo disco
 	public static void crearMusica() {
 		System.out.println("# CREAR MUSICA #");
 		String titulo = "";
@@ -303,6 +301,14 @@ public class Musica {
 
 	public void setAutor(String autor) {
 		this.autor = autor;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 }

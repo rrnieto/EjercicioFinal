@@ -1,3 +1,4 @@
+//REVISADO
 package rns.ejerciciofinal;
 
 import java.io.IOException;
@@ -23,7 +24,10 @@ public class TiendaMusica {
 	 */
 	public static void main(String[] args) {
 
+		Utilidades.cabecera();
+
 		// TODO INI comentar esta llamada
+		/*
 		System.out.println("### CARGANDO CLIENTES DE PRUEBA");
 		//Cliente.cargarClientes();
 		System.out.println();
@@ -31,7 +35,9 @@ public class TiendaMusica {
 		Musica.cargarMusica();
 		System.out.println();
 		// cargarMusica();
+		 */
 		// TODO FIN comentar esta llamada
+
 		// Cargamos los vendedores disponibles, se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa
 		Vendedor.cargarVendedores();
 		Venta.cargarVentas();
@@ -40,6 +46,10 @@ public class TiendaMusica {
 
 	}
 
+	/*Controlamos los comandos introducidos por pantalla
+	Comprueba que los comandos son correctos
+	Maneja excepciones en casos determinados
+	*/
 	public static void introducirComando() {
 		Scanner entradaPantalla = null;
 		String comando = "";
@@ -79,6 +89,7 @@ public class TiendaMusica {
 				sb.append(entidad);
 				comandoCapturado = sb.toString().trim();
 
+				//Comprobamos el nº de palabras que tiene el comando introducido
 				if (numeroTokens <= 2) {
 					if (Utilidades.compruebaString(comandoCapturado,
 							Constantes.LISTA_COMANDOS)) {
@@ -106,7 +117,6 @@ public class TiendaMusica {
 							Venta.crearVenta();
 						} else if (comandoCapturado
 								.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-							System.out.println("Venta.eliminarVenta();");
 							Venta.eliminarVenta();
 						} else if (comandoCapturado
 								.equalsIgnoreCase(Constantes.LISTAR_VENTAS)) {
@@ -124,6 +134,7 @@ public class TiendaMusica {
 					}
 				}
 
+				//Si el comando tiene 3 palabras verificamos que es correcto y ejecutamos los borrados con codigo
 				if (numeroTokens == 3) {
 					if (Utilidades.compruebaString(comandoCapturado,
 							Constantes.LISTA_COMANDOS)) {
@@ -137,7 +148,7 @@ public class TiendaMusica {
 
 						} else if (comandoCapturado
 								.equalsIgnoreCase(Constantes.ELIMINAR_VENTA)) {
-							System.out.println("Venta.eliminarVenta();");
+
 							Venta.eliminarVenta(Integer.parseInt(codigo));
 
 						} else if (comandoCapturado
@@ -148,23 +159,30 @@ public class TiendaMusica {
 				}
 
 			} while (!comandoValido);
-		} catch (NumberFormatException nfe) {
+		}//Manejamos la excepcion en caso de que el dato introducido sea erróneo 
+		catch (NumberFormatException nfe) {
 			System.out.println("No ha introducido un número válido");
 			introducirComando();
 		}
 
+		//Controlamos y procesamos el caso en que se introduzca el comando CERRAR
 		if (comando.equalsIgnoreCase(Constantes.CERRAR)) {
 			//Antes de cerrar volcaremos los datos que tenemos en memoria sobre los vendedores y las ventas a su fichero de texto correspondiente
 			try {
+				//Llamamos a las funciones que almacenan los datos en ficheros
 				Vendedor.guardarCambios();
 				Venta.guardarCambios();
 
-			} catch (IOException ioe) {
+			}
+			//Controlamos las excepciones que se pueden producir al manejar el fichero de texto
+			catch (IOException ioe) {
 				System.out
 						.println("# Se ha producido un error al procesar el fichero de vendedores, los cambios no se han guardado");
 			}
 
 			System.out.println("# Gracias por su visita");
+			//Salimos de la ejecución del programa
+			System.exit(0);
 		}
 
 	}

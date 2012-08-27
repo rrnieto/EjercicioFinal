@@ -1,3 +1,4 @@
+//REVISADO
 package rns.ejerciciofinal.entidades;
 
 import java.util.HashMap;
@@ -33,6 +34,9 @@ public class Cliente extends Persona {
 		int clientesActivos = 0;
 		Scanner entradaPantalla;
 		String eliminar = null;
+
+		Utilidades.cabecera();
+		System.out.println("LISTADO DE CLIENTES: ");
 
 		//Recorremos la lista de clientes y mostramos sus datos
 		for (int i = 1; i <= TiendaMusica.listaClientes.size(); i++) {
@@ -216,6 +220,7 @@ public class Cliente extends Persona {
 		System.out.println("Nombre: " + nombre + "; Apellido: " + apellido
 				+ "; DNI: " + dni + "; Código cliente: " + codigoCliente);
 
+		System.out.println();
 		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 

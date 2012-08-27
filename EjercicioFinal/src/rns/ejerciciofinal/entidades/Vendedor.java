@@ -1,3 +1,4 @@
+//REVISADO
 package rns.ejerciciofinal.entidades;
 
 import java.io.BufferedReader;
@@ -36,6 +37,9 @@ public class Vendedor extends Persona {
 		Vendedor vendedor = null;
 		int vendedoresActivos = 0;
 
+		Utilidades.cabecera();
+		System.out.println("LISTA VENDEDORES: ");
+
 		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
 
 		while (it.hasNext()) {
@@ -57,6 +61,7 @@ public class Vendedor extends Persona {
 		if ((TiendaMusica.listaVendedores.size() == 0)
 				|| vendedoresActivos == 0) {
 			System.out.println("No existe ningún vendedor");
+			System.out.println();
 		}
 
 		//Volvemos al menu inicial
@@ -120,6 +125,7 @@ public class Vendedor extends Persona {
 					.println("Dato introducido no válido, debe introducir un código de vendedor");
 		}
 
+		System.out.println();
 		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 	}
@@ -171,8 +177,6 @@ public class Vendedor extends Persona {
 		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 	}
-	
-
 
 	/* Creación de vendedor */
 	public static void crearVendedor() {
@@ -208,6 +212,7 @@ public class Vendedor extends Persona {
 		System.out.println("Nombre: " + nombre + "; Apellido: " + apellido
 				+ "; Código vendedor: " + codigoVendedor);
 
+		System.out.println();
 		//Volvemos al menu inicial
 		TiendaMusica.introducirComando();
 
@@ -271,6 +276,7 @@ public class Vendedor extends Persona {
 			System.out.println("Creamos el fichero vendedores.txt");
 			FileWriter fichero = new FileWriter("/vendedores.txt");
 			System.out.println("Fichero vendedores.txt creado con éxito");
+			System.out.println();
 			fichero.flush();
 		} catch (IOException ioe) {
 			System.out
@@ -334,10 +340,9 @@ public class Vendedor extends Persona {
 		String apellido;
 		FileWriter ficheroVendedores = new FileWriter("/vendedores.txt");
 		StringBuilder registro = null;
-		
+
 		Iterator<Integer> it = calculaKeys(TiendaMusica.listaVendedores);
-		
-		
+
 		//Guardar cambios en los vendedores
 		if (comprobarVendedores()) {
 			while (it.hasNext()) {

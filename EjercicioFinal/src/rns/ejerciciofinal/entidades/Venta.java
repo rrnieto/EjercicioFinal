@@ -1,6 +1,9 @@
 package rns.ejerciciofinal.entidades;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,6 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import rns.ejerciciofinal.TiendaMusica;
 import rns.ejerciciofinal.constantes.Constantes;
@@ -17,18 +21,26 @@ public class Venta {
 
 	private int codigoVenta;
 	private int codigoVendedor;
+	private String nombreVendedor;
+	private String apellidoVendedor;
 	private int codigoCliente;
+	private String nombreCliente;
+	private String apellidoCliente;
 	private int codigoMusica;
+	private String musica;
 	//La variable boolean activo la utilizaremos como un marcador para saber si la venta se ha borrado o no
 	private boolean activo;
 
 	//Constructor de la clase venta
-	public Venta(int codigoVenta, int codigoVendedor, int codigoCliente,
-			int codigoMusica) {
+	public Venta(int codigoVenta, String nombreVendedor,
+			String apellidoVendedor, String nombreCliente,
+			String apellidoCliente, String musica) {
 		this.codigoVenta = codigoVenta;
-		this.codigoVendedor = codigoVendedor;
-		this.codigoCliente = codigoCliente;
-		this.codigoMusica = codigoMusica;
+		this.nombreVendedor = nombreVendedor;
+		this.apellidoVendedor = apellidoVendedor;
+		this.nombreCliente = nombreCliente;
+		this.apellidoCliente = apellidoCliente;
+		this.musica = musica;
 
 		this.activo = true;
 	}
@@ -49,9 +61,11 @@ public class Venta {
 				//Solo mostramos los ventas activos (es decir los que no se han borrado)
 				if (venta.isActivo()) {
 					System.out.println("Venta: " + venta.getCodigoVenta()
-							+ "; Cliente: " + venta.getCodigoCliente()
-							+ "; Disco: " + venta.getCodigoMusica()
-							+ "; Vendedor: " + venta.getCodigoVendedor());
+							+ "; Cliente: " + venta.getNombreCliente() + " "
+							+ venta.getApellidoCliente() + "; Disco: "
+							+ venta.getMusica() + "; Vendedor: "
+							+ venta.getNombreVendedor() + " "
+							+ venta.getApellidoVendedor());
 					ventasActivos++;
 				}
 			}
@@ -194,9 +208,14 @@ public class Venta {
 
 		Scanner entradaPantalla = null;
 		int codigoVendedor = 0;
+		String nombreVendedor = "";
+		String apellidoVendedor = "";
 		int codigoMusica = 0;
+		String musica = "";
 		int codigoVenta = 0;
 		int codigoCliente = 0;
+		String nombreCliente = "";
+		String apellidoCliente = "";
 		boolean venta = true;
 
 		//Hay que calcular el código de venta
@@ -207,10 +226,14 @@ public class Venta {
 			System.out.print("Introduce el codigo del vendedor: ");
 			entradaPantalla = new Scanner(System.in);
 			codigoVendedor = Integer.parseInt(entradaPantalla.nextLine());
-			//TODO COMPROBAR CODIGO
+
 			if ((TiendaMusica.listaVendedores.containsKey(codigoVendedor))
 					&& TiendaMusica.listaVendedores.get(codigoVendedor)
 							.isActivo()) {
+				nombreVendedor = TiendaMusica.listaVendedores.get(
+						codigoVendedor).getNombre();
+				apellidoVendedor = TiendaMusica.listaVendedores.get(
+						codigoVendedor).getApellido();
 				venta = true;
 			} else {
 				venta = false;
@@ -223,9 +246,13 @@ public class Venta {
 			System.out.print("Introduce el codigo del cliente: ");
 			entradaPantalla = new Scanner(System.in);
 			codigoCliente = Integer.parseInt(entradaPantalla.nextLine());
-			//TODO COMPROBAR CODIGO
+
 			if ((TiendaMusica.listaClientes.containsKey(codigoCliente))
 					&& TiendaMusica.listaClientes.get(codigoCliente).isActivo()) {
+				nombreCliente = TiendaMusica.listaClientes.get(codigoCliente)
+						.getNombre();
+				apellidoCliente = TiendaMusica.listaClientes.get(codigoCliente)
+						.getApellido();
 				venta = true;
 			} else {
 				venta = false;
@@ -238,10 +265,10 @@ public class Venta {
 			System.out.print("Introduce el codigo del disco: ");
 			entradaPantalla = new Scanner(System.in);
 			codigoMusica = Integer.parseInt(entradaPantalla.nextLine());
-			//TODO COMPROBAR CODIGO
+
 			if ((TiendaMusica.listaMusica.containsKey(codigoMusica))
-					&& TiendaMusica.listaVendedores.get(codigoMusica)
-							.isActivo()) {
+					&& TiendaMusica.listaMusica.get(codigoMusica).isActivo()) {
+				musica = TiendaMusica.listaMusica.get(codigoMusica).getTitulo();
 				venta = true;
 			} else {
 				venta = false;
@@ -250,16 +277,17 @@ public class Venta {
 		} while (entradaPantalla == null || !venta);
 
 		if (venta) {
-			//Creamos el venta con los datos
-			Venta ventaNueva = new Venta(codigoVenta, codigoVendedor,
-					codigoCliente, codigoMusica);
+			//Creamos la venta con los datos
+			Venta ventaNueva = new Venta(codigoVenta, nombreVendedor,
+					apellidoVendedor, nombreCliente, apellidoCliente, musica);
 
-			//Metemos el nuevo venta en la lista de ventas
+			//Metemos la nueva venta en la lista de ventas
 			TiendaMusica.listaVentas.put(codigoVenta, ventaNueva);
 			System.out.println("Venta creado con éxito con código: "
 					+ codigoVenta);
-			System.out.println("Vendedor: " + codigoVendedor + "; Disco: "
-					+ codigoMusica + "; Cliente: " + codigoCliente);
+			System.out.println("Vendedor: " + nombreVendedor + " "
+					+ apellidoVendedor + "; Disco: " + musica + "; Cliente: "
+					+ nombreCliente + " " + apellidoCliente);
 		} else {
 			System.out
 					.println("No se ha podido guardar la venta porque hay errores en los datos introducidos");
@@ -270,25 +298,79 @@ public class Venta {
 
 	}
 
-	//COMPROBACION DE FICHERO DE VENTAS, si no existe lo crearemos
+	//Método para cargar los ventas. 
+	//Se leen de un fichero de texto ubicado en la raiz de la unidad donde se ejecuta el programa.
 	public static void cargarVentas() {
+		System.out.println("# Cargando ventas");
 
 		File ficheroVentas = new File("/ventas.txt");
 		if (ficheroVentas.exists()) {
 			System.out.println("# Fichero de ventas encontrado");
-		} else {
-			System.out.println("# No existe fichero de ventas");
+
+			Venta vent = null;
+			FileReader leer = null;
+
+			int codigoVenta = 0;
+			String vendedor = "";
+			String nombreVendedor = "";
+			String apellidoVendedor = "";
+			String cliente = "";
+			String nombreCliente = "";
+			String apellidoCliente = "";
+			String disco = "";
+			BufferedReader leerDeFichero = null;
+			String cadena = "";
+			StringTokenizer stk = null;
+			StringTokenizer stkV = null;
+
 			try {
-				System.out.println("# Creando fichero de ventas");
-				FileWriter fichero = new FileWriter("/ventas.txt");
-				System.out.println("Fichero ventas.txt creado con éxito");
-				fichero.flush();
+				leer = new FileReader("/ventas.txt");
+				leerDeFichero = new BufferedReader(leer);
+
+				cadena = leerDeFichero.readLine();
+
+				while (cadena != null) {
+					//Dividimos la cadena linea leida
+					stk = new StringTokenizer(cadena, ";");
+
+					codigoVenta = Integer.parseInt(stk.nextToken());
+					vendedor = stk.nextToken();
+					stkV = new StringTokenizer(vendedor, " ");
+					nombreVendedor = stkV.nextToken();
+					apellidoVendedor = stkV.nextToken();
+					cliente = stk.nextToken();
+					stkV = new StringTokenizer(cliente, " ");
+					nombreCliente = stkV.nextToken();
+					apellidoCliente = stkV.nextToken();
+					disco = stk.nextToken();
+
+					vent = new Venta(codigoVenta, nombreVendedor,
+							apellidoVendedor, nombreCliente, apellidoCliente,
+							disco);
+
+					System.out.println("Venta " + vent.getCodigoVenta()
+							+ " Vendedor:" + vendedor + " Cliente: " + cliente
+							+ " Disco: " + disco);
+
+					//Añadimos cada venta al listado en memoria
+					TiendaMusica.listaVentas.put(vent.getCodigoVenta(), vent);
+
+					cadena = leerDeFichero.readLine();
+				}
+				//Una vez finalizada la lectura cerramos el fichero
+				leer.close();
+			}
+			//En caso de que no exista el fichero capturamos la excepción correspondiente, informamos al usuario y llamamos al método que creará el fichero
+			catch (FileNotFoundException fnfe) {
+				System.out.println("No se ha encontrado el fichero de ventas.");
+
 			} catch (IOException ioe) {
 				System.out
 						.println("Se ha producido un error al procesar el fichero de ventas");
 			}
-		}
 
+		}
+		System.out.println();
 	}
 
 	//Método que obtiene el codigo de venta que se debe asignar en la creación de una nueva venta
@@ -342,9 +424,14 @@ public class Venta {
 	public static void guardarCambios() throws IOException {
 		Venta vent = null;
 		int codigoVenta;
-		int codigoVendedor;
-		int codigoCliente;
-		int codigoMusica;
+
+		String nombreVendedor = "";
+		String apellidoVendedor = "";
+
+		String nombreCliente = "";
+		String apellidoCliente = "";
+
+		String musica = "";
 
 		FileWriter ficheroVentas = new FileWriter("/ventas.txt");
 		StringBuilder registro = null;
@@ -359,17 +446,23 @@ public class Venta {
 				vent = TiendaMusica.listaVentas.get(key);
 				if (vent.isActivo()) {
 					codigoVenta = vent.getCodigoVenta();
-					codigoVendedor = vent.getCodigoVendedor();
-					codigoCliente = vent.getCodigoCliente();
-					codigoMusica = vent.getCodigoMusica();
+					nombreCliente = vent.getNombreCliente();
+					apellidoCliente = vent.getApellidoCliente();
+					nombreVendedor = vent.getNombreVendedor();
+					apellidoVendedor = vent.getApellidoVendedor();
+					musica = vent.getMusica();
 					registro = new StringBuilder("");
 					registro.append(codigoVenta);
 					registro.append(";");
-					registro.append(codigoVendedor);
+					registro.append(nombreVendedor);
+					registro.append(" ");
+					registro.append(apellidoVendedor);
 					registro.append(";");
-					registro.append(codigoCliente);
+					registro.append(nombreCliente);
+					registro.append(" ");
+					registro.append(apellidoCliente);
 					registro.append(";");
-					registro.append(codigoMusica);
+					registro.append(musica);
 					registro.append(System.getProperty("line.separator"));
 					ficheroVentas.write(registro.toString());
 				}
@@ -394,6 +487,46 @@ public class Venta {
 
 	public int getCodigoVenta() {
 		return codigoVenta;
+	}
+
+	public String getNombreVendedor() {
+		return nombreVendedor;
+	}
+
+	public void setNombreVendedor(String nombreVendedor) {
+		this.nombreVendedor = nombreVendedor;
+	}
+
+	public String getApellidoVendedor() {
+		return apellidoVendedor;
+	}
+
+	public void setApellidoVendedor(String apellidoVendedor) {
+		this.apellidoVendedor = apellidoVendedor;
+	}
+
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public String getApellidoCliente() {
+		return apellidoCliente;
+	}
+
+	public void setApellidoCliente(String apellidoCliente) {
+		this.apellidoCliente = apellidoCliente;
+	}
+
+	public String getMusica() {
+		return musica;
+	}
+
+	public void setMusica(String musica) {
+		this.musica = musica;
 	}
 
 	public void setCodigoVenta(int codigoVenta) {
